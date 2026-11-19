@@ -16,7 +16,7 @@
 namespace {
 
 const char *START = "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1";
-const char *NAME = "StockCrab 1.0";
+const char *NAME = "StockCrab 1.0.1";
 
 std::mutex out_lock;
 uci::Writer writer = [](const std::string &s) { std::cout << s << std::endl; };

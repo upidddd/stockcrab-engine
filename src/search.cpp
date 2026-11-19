@@ -404,6 +404,7 @@ Move go(Position &pos, const Limits &lim, const Options &opt, const std::functio
     std::vector<std::vector<Move>> lines;
     Move best = root_moves[0];
     int best_score = 0;
+    int last_depth = 0;
 
     if (root_moves.size() == 1 && !lim.infinite && timed) max_depth = std::min(max_depth, 4);
 
@@ -468,6 +469,7 @@ Move go(Position &pos, const Limits &lim, const Options &opt, const std::functio
         }
         best = results[0].second;
         best_score = results[0].first;
+        last_depth = depth;
 
         int64_t ms = elapsed();
         for (int k = 0; k < std::min<int>(multipv, results.size()); k++) {
@@ -501,6 +503,15 @@ Move go(Position &pos, const Limits &lim, const Options &opt, const std::functio
         int k = d(rng);
         best = results[k].second;
         best_score = results[k].first;
+        // the move it picked may be one of the lines it searched but did not print: print it, so a GUI has its score
+        if (k >= std::min<int>(multipv, results.size()) && k < int(lines.size())) {
+            int64_t ms = elapsed();
+            std::ostringstream o;
+            o << "info depth " << last_depth << " seldepth " << seldepth << " multipv " << k + 1 << " score " << score_str(best_score)
+              << " nodes " << nodes << " nps " << (ms ? nodes * 1000 / ms : nodes) << " time " << ms << " pv";
+            for (Move m : lines[k]) o << ' ' << pos.move_to_uci(m);
+            report(o.str());
+        }
     }
 
     if (opt.talk) {
