@@ -1,0 +1,5 @@
+stockcrab
+perft-test
+match
+*.o
+dist/
