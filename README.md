@@ -2,7 +2,7 @@
 
 <h1 align="center">StockCrab</h1>
 
-<p align="center">A small chess engine with a character. UCI, 154 KB, plays at the level of Stockfish 17 limited to 2800.</p>
+<p align="center">A small chess engine with a crab. UCI, 154 KB, plays at the level of Stockfish 17 limited to 2800.</p>
 
 ---
 
